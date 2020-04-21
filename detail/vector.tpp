@@ -61,7 +61,7 @@ namespace HSTL{
             for(; tmpIter - pos>=0 ; tmpIter--){
                 construct((tmpIter+required_space), *tmpIter);
             }
-            iterator tmp = uninitialized_fill_n(pos, required_space, value);
+            auto tmp = uninitialized_fill_n(pos, required_space, value);
             _end = _end + required_space;
         }else {
             // 空间不够需要重新申请空间
