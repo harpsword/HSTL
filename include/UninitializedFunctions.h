@@ -42,8 +42,8 @@ namespace HSTL{
 
     template <typename iterator>
     iterator uninitialized_copy_n(iterator start, iterator end, iterator new_start){
-        auto i = start;
-        if (sizeof(i) == 1) return _uninitialized_copy_n_1bytes(start, end, new_start);
+//        auto *i = start;
+        if (sizeof(*start) == 1) return _uninitialized_copy_n_1bytes(start, end, new_start);
         else return _uninitialized_copy_n_nbytes(start, end, new_start);
     }
 

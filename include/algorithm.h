@@ -11,10 +11,18 @@ namespace HSTL{
         return (a > b) ? a : b;
     }
 
+    template<typename T>
+    void swap(T& a, T& b){
+        T c = a;
+        a = b;
+        b = c;
+    }
+
     template<typename T1, typename T2>
     inline void construct(T1 *ptr1, const T2& value){
         new(ptr1) T1(value);
     }
+
 
 }
 
