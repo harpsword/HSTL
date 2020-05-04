@@ -12,7 +12,7 @@ namespace HSTL{
 
     template <class T, class Alloc>
     vector<T, Alloc>::vector() {
-        allocateAndFillN(0, 0);
+        allocateAndFillN(0, T());
     }
 
     template <class T, class Alloc>
@@ -22,7 +22,7 @@ namespace HSTL{
 
     template<typename T, typename Alloc>
     vector<T, Alloc>::vector(size_type n){
-        vector(n, T());
+        allocateAndFillN(n, T());
     }
 
     template<typename T, typename Alloc>

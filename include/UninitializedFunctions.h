@@ -8,25 +8,30 @@
 #include <cstddef>
 #include <memory.h>
 #include "algorithm.h"
+#include "TypeTraits.h"
 
 namespace HSTL{
     // fill vector[start: start+n] with v
     template <typename iterator, typename Size, typename T>
-    iterator _uninitialized_fill_n_1bytes(iterator start, Size n, const T& v);
+    iterator _uninitialized_fill_n(iterator start, Size n, const T& v, _true_type);
     template <typename iterator, typename Size, typename T>
-    iterator _uninitialized_file_n_nbyets(iterator start, Size n, const T& v);
+    iterator _uninitialized_fill_n(iterator start, Size n, const T& v, _false_type);
+
     template <typename iterator, typename Size, typename T>
     iterator uninitialized_fill_n(iterator start, Size n, const T& v){
-        if (sizeof(T)==1) return _uninitialized_fill_n_1bytes(start, n, v);
-        else return _uninitialized_file_n_nbyets(start, n, v);
+        typedef typename _type_traits<T>::is_POD_type isPodType;
+        return _uninitialized_fill_n(start, n, v, isPodType());
+//        if (sizeof(T) == 1) return _uninitialized_fill_n(start, n, v, _true_type());
+//        else return _uninitialized_fill_n(start, n, v, _false_type());
     }
     template <typename iterator, typename Size, typename T>
-    iterator _uninitialized_fill_n_1bytes(iterator start, Size n, const T& v){
-        memset(static_cast<void *>(start), static_cast<char>(v), n);
+    iterator _uninitialized_fill_n(iterator start, Size n, const T& v, _true_type){
+        // for
+        memset(static_cast<void *>(start), static_cast<unsigned char>(v), n);
         return start + n;
     }
     template <typename iterator, typename Size, typename T>
-    iterator _uninitialized_file_n_nbyets(iterator start, Size n, const T& v){
+    iterator _uninitialized_fill_n(iterator start, Size n, const T& v, _false_type){
         for (Size iter = 0; iter != n; iter++){
             construct((start+iter), v);
         }

@@ -9,6 +9,8 @@
 #include "include/vector.h"
 #include "test_alloc.h"
 #include "Profiler/Profiler.h"
+#include <vector>
+#include <iostream>
 
 void output_array(HSTL::vector<int> &v){
     std::cout << "size of vector:" << v.size() << std::endl;
@@ -20,7 +22,7 @@ void output_array(HSTL::vector<int> &v){
 }
 
 void test_vector_init(){
-    HSTL::vector<int> array;
+    HSTL::vector<int> array(10);
     array.push_back(5);
 
     std::cout << "Static int value:" << HSTL::vector<int>::InitialSize << std::endl;
@@ -30,9 +32,18 @@ void test_vector_init(){
 
     std::cout << "int size:" << sizeof(int) << std::endl;
     // 测试空间配置器那的内存链接
-    std::cout << "address of 32 bytes list :" << HSTL::alloc::free_list[3] << std::endl;
+    std::cout << "address of 8 bytes list :" << HSTL::alloc::free_list[0] << std::endl;
     // output freelist description
-    output_free_list(32);
+    output_free_list(8);
+    std::cout << "size:" << array.size() << std::endl;
+    std::cout << array._start << std::endl;
+    std::cout << array._end<< std::endl;
+    std::cout << array._endOfStorage << std::endl;
+
+    for (auto &i : array){
+        std::cout << i  << "addr:" << & i<< std::endl;
+    }
+
 }
 
 void test_vector_init_n_v(){
@@ -184,6 +195,23 @@ int test_vector_operator_equal()
     std::cout << "After move, addr:" << nums3._start << std::endl;
     std::cout << "After move assigment:\n";
     display_sizes(nums1, nums2, nums3);
+    return 1;
+}
+
+void test_copy_construct(){
+    struct data{
+        int a;
+        int b;
+    };
+    HSTL::vector<data> tmp(3);
+    std::cout << "size:" <<tmp.size() << std::endl;
+    std::cout << tmp._start << std::endl;
+    std::cout << tmp._end<< std::endl;
+    std::cout << tmp._endOfStorage << std::endl;
+
+    for (auto &i : tmp){
+        std::cout << &i << std::endl;
+    }
 }
 
 #endif //STL_TEST_VECTOR_H

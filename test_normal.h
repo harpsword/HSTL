@@ -51,4 +51,18 @@ void test_pointer(){
     std::cout << sizeof(*a) << std::endl;
 }
 
+template<typename T>
+class Test{
+public:
+    using const_pointer = const T*;
+};
+
+void test_const_pointer(){
+    auto cp = Test<int>::const_pointer(nullptr);
+    const int ci = 5;
+    cp = &ci;
+    const int ci2 = 10;
+    cp  = &ci2;
+}
+
 #endif //STL_TEST_NORMAL_H

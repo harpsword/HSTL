@@ -5,8 +5,8 @@
 #include <iostream>
 #include <vector>
 
-#define private public
 
+#define private public
 #include "include/allocator.h"
 
 void output_free_list(int T_size){

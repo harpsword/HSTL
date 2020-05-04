@@ -28,7 +28,7 @@ namespace HSTL{
         using difference_type = ptrdiff_t;
     private:
         static const size_type GrowthRate{2};
-        static const size_type InitialSize{8};
+        static const size_type InitialSize{0};
 
         T *_start = nullptr;
         T *_end = nullptr;
@@ -73,7 +73,6 @@ namespace HSTL{
         const_reference operator[] (size_type pos) const {
             range_check(pos);
             return *(_start + pos);
-//            return *(cbegin()+pos);
         }
         reference at(size_type pos) {
             range_check(pos);
@@ -128,4 +127,5 @@ namespace HSTL{
 }
 
 #include "../detail/vector.tpp"
+
 #endif //STL_VECTOR_H

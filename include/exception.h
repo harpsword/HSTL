@@ -10,7 +10,7 @@ namespace HSTL{
     public:
         exception() {}
         ~exception() {}
-        virtual char *what(){ }
+      virtual char *what()=0;
     };
 
     class out_of_range: exception{
